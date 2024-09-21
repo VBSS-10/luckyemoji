@@ -70,7 +70,7 @@ export class SlotMachine {
         reelCount = 3,
         symbols = SYMBOLS_CLASSIC,
         isPaused = false,
-        speed = -0.552, // TODO: Make enum and match sounds too.
+        speed = -0.552,
     ) {
         this.init(wrapper, handleUseCoin, handleGetPrice, reelCount, symbols, speed);
 
@@ -258,7 +258,7 @@ export class SlotMachine {
                 maxOccurrences = occurrences;
 
                 const index = symbols.indexOf(symbol);
-                const maxIndex = symbols.indexOf(maxSymbol); // TODO: Calculate every time?
+                const maxIndex = symbols.indexOf(maxSymbol);
 
                 if (index > maxIndex) {
                     maxSymbol = symbol;
@@ -267,7 +267,7 @@ export class SlotMachine {
             }
         }
 
-        // TODO: Use a constant for this `2`:
+
         return maxOccurrences > 2 ? maxOccurrences * (maxPrize / symbols.length) / reelCount : null;
     }
 
@@ -280,7 +280,7 @@ export class SlotMachine {
 
         const { key } = e;
 
-        // TODO: This should not be here:
+
         // if (key === 'Esc') {
         //     document.activeElement.blur();
 
@@ -319,14 +319,14 @@ export class SlotMachine {
             const parentTagName = target.parentElement.tagName;
 
             if (/^A|BUTTON$/.test(targetTagName) || /^A|BUTTON$/.test(parentTagName)) {
-                // TODO: This is only needed for links.
+
 
                 document.activeElement.blur();
 
                 return;
             }
 
-            // TODO: Should be e.button instead?
+
             if (e.which === 3) return;
         }
 

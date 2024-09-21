@@ -3,26 +3,18 @@ import { ModalButton } from '../modal-button/modal-button.component';
 
 export class Modal {
 
-    // Shared across instances:
     static OPEN_MODAL = null;
-
-    // CSS selectors:
     static S_CLOSE_BUTTON = '.modal__button';
-
-    // CSS classes:
     static C_IS_OPEN = 'is-open';
 
-    // Elements:
     root;
     closeButton;
     modalButton;
 
-    // State:
     key;
     isOpen;
     isFixed;
 
-    // Callbacks:
     onModalToggled;
 
 

@@ -48,7 +48,7 @@
         "object-curly-newline": [2, { "multiline": true, "consistent": true }],
         "no-param-reassign": [2, { "props": false }],
         "operator-linebreak": [2, "before"],
-        "class-methods-use-this": [0], // Отключаем требование использования 'this' в методах класса
-        "no-new": [0] // Отключаем предупреждение об использовании 'new' для побочных эффектов
+        "class-methods-use-this": [0],
+        "no-new": [0] 
     }
 }

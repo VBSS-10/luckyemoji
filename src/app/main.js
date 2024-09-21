@@ -1,5 +1,5 @@
 import { App } from './components/app/app.component';
-import { Wallet } from './components/wallet/wallet.component';
+import { Profile } from './components/profile/profile.component';
 import { Tasks } from './components/tasks/tasks.component';
 import { Info } from './components/info/info.component';
 
@@ -9,9 +9,9 @@ if (document.querySelector(App.S_COINS)) {
     new App();
 }
 
-// For wallet.html page
-if (document.querySelector('.wallet__base')) {
-    new Wallet();
+// For profile.html page
+if (document.querySelector('.profile__base')) {
+    new Profile();
 }
 
 

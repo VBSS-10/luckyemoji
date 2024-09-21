@@ -1,11 +1,11 @@
 {
-    "name": "Happy Emoji",
+    "name": "Lucky Emoji",
     "version": "1.0.0",
     "description": "🎰 Circular slot machine Emojis!",
     "homepage": "https://t.me/happyemojitap",
     "license": "MIT",
     "author": {
-        "name": "Happy Emoji",
+        "name": "Lucky Emoji",
         "email": "happyemojitap@gmail.com",
         "url": "https://t.me/happyemojitap"
     },

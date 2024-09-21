@@ -12,7 +12,7 @@ export class Tasks {
         const backButton = document.getElementById('backButton');
         if (backButton) {
             backButton.addEventListener('click', () => {
-                window.location.href = 'index.html'; // Путь на страницу со слот машиной
+                window.location.href = 'index.html';
             });
         }
     }

@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charSet="UTF-8" />
-
     <title><%= htmlWebpackPlugin.options.title %></title>
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link rel="preload" href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" as="style" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" media="print" onload="this.media='all'" />
@@ -18,7 +16,13 @@
             <h1 class="tasks__text"><%= htmlWebpackPlugin.options.title %></h1>
         </div>
     </main>
-    
+
+    <div class="tasks__content">
+        <div class="tasks__title">
+            <p>Title for tasks</p>
+            <button>Claim</button>
+        </div>
+    </div>
 
 
     <%- include ../footer/footer.template.ejs %>

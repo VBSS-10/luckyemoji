@@ -1,9 +1,9 @@
 <footer class="footer__base">
     <ul class="footer__content">
         <li class="footer__option is-active">
-            <a href="wallet.html" class="footer__button footer__modalButton" title="Wallet">
-                <img class="footer__buttonIcon" src="wallet/wallet_icon.svg" aria-hidden="true" />
-                <!-- <span class="footer__buttonText">Wallet</span> -->
+            <a href="profile.html" class="footer__button footer__modalButton" title="Profile">
+                <img class="footer__buttonIcon" src="profile/profile_icon.svg" aria-hidden="true" />
+                <!-- <span class="footer__buttonText">Profile</span> -->
             </a>
         </li>
         
@@ -48,16 +48,15 @@
 </footer>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Получаем все элементы с классом footer__option
+ 
         const footerOptions = document.querySelectorAll('.footer__option');
     
-        // Добавляем обработчик события на каждую кнопку или ссылку
+ 
         footerOptions.forEach(option => {
             option.addEventListener('click', function() {
-                // Удаляем класс is-active у всех кнопок
+ 
                 footerOptions.forEach(opt => opt.classList.remove('is-active'));
-    
-                // Добавляем класс is-active к текущей нажатой кнопке
+ 
                 this.classList.add('is-active');
             });
         });

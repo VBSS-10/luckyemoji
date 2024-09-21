@@ -1,8 +1,8 @@
-import './wallet.styles.scss';
+import './profile.styles.scss';
 import '../footer/footer.styles.scss';
 
 
-export class Wallet {
+export class Profile {
 
     constructor() {
         this.initUI();
@@ -12,7 +12,7 @@ export class Wallet {
         const backButton = document.getElementById('backButton');
         if (backButton) {
             backButton.addEventListener('click', () => {
-                window.location.href = 'index.html'; // Путь на страницу со слот машиной
+                window.location.href = 'index.html';
             });
         }
 
@@ -22,5 +22,5 @@ export class Wallet {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    new Wallet();
+    new Profile();
 });

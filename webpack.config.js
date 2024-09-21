@@ -27,7 +27,7 @@ module.exports = (env, { mode }) => {
                 './src/app/main.js',
                 './src/app/main.scss',
             ],
-            wallet: './src/app/components/wallet/wallet.component.js', // Добавляем новый entry point для страницы Wallet
+            profile: './src/app/components/profile/profile.component.js', // Добавляем новый entry point для страницы Profile
             tasks: './src/app/components/tasks/tasks.component.js', // Добавляем новый entry point для страницы Tasks
             info: './src/app/components/info/info.component.js', // Добавляем новый entry point для страницы Info
         },
@@ -99,18 +99,18 @@ module.exports = (env, { mode }) => {
                 },
             }),
 
-            // Страница Wallet
+            // Страница Profile
             new HtmlWebpackPlugin({
-                filename: path.resolve(__dirname, 'dist/wallet.html'),
-                template: path.resolve(__dirname, 'src/app/components/wallet/wallet.template.ejs'),
-                chunks: ['wallet'], // Только wallet.bundle.js будет подключен на этой странице
-                title: 'Wallet',
-                description: 'Manage your wallet in Happy Emoji!',
+                filename: path.resolve(__dirname, 'dist/profile.html'),
+                template: path.resolve(__dirname, 'src/app/components/profile/profile.template.ejs'),
+                chunks: ['profile'], // Только profile.bundle.js будет подключен на этой странице
+                title: 'Profile',
+                description: 'Manage your profile in Happy Emoji!',
                 minify: PROD,
                 meta: {
                     author: pkg.author.name,
-                    description: 'Manage your wallet in Happy Emoji!',
-                    title: 'Wallet',
+                    description: 'Manage your profile in Happy Emoji!',
+                    title: 'Profile',
                 },
             }),
 

@@ -6,20 +6,20 @@
 
     &__base {
         position: relative;
-        background: rgba(39, 43, 46, 0.51); // Цвет с 51% прозрачностью
+        background: rgba(39, 43, 46, 0.51);
         z-index: 10;
         transform: translateZ(0);
-        border-top: 1px solid #3B3A3A; // TODO: Create var
+        border-top: 1px solid #3B3A3A;
         max-height: 56px;
     }
 
     &__content {
-        max-width: 800px; // TODO: Create var
+        max-width: 800px;
         margin: 0 auto;
         display: flex;
-        justify-content: space-between; // Расстояние между кнопками
+        justify-content: space-between;
         list-style: none;
-        padding: 0 15px; // Отступы от краев
+        padding: 0 15px;
     }
 
     &__option {
@@ -59,31 +59,29 @@
             image-rendering: pixelated;
             transition: transform ease-in 0.125s, fill 0.125s;
             filter: invert(31%) sepia(8%) saturate(186%) hue-rotate(180deg) brightness(95%) contrast(89%);
-            margin-bottom: 2px; // Отступ текста от иконки
+            margin-bottom: 2px;
 
             @include above(sm) {
                 margin-right: 4px;
             }
         }
 
-        // Стили для иконки при наведении
         &:hover > &Icon {
             image-rendering: auto;
             transform: scale(1.4);
             filter: invert(91%) sepia(5%) saturate(8%) hue-rotate(177deg) brightness(105%) contrast(91%);
         }
 
-        // Стили для иконки, когда кнопка активна
         &:active > &Icon,
         &.is-active > &Icon {
             filter: invert(91%) sepia(5%) saturate(8%) hue-rotate(177deg) brightness(105%) contrast(91%);
-            filter: brightness(0) invert(1); // Для обеспечения белого цвета у любого SVG
+            filter: brightness(0) invert(1);
         }
 
         &Text {
             display: block;
             text-align: center;
-            margin-top: 0; // Отступ текста от нижней части
+            margin-top: 0;
 
             @include above(sm) {
                 display: block;
