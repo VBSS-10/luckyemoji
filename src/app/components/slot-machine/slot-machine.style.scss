@@ -28,7 +28,7 @@
 
     &__reel {
         --i: 0;
-        --bg: transparent;
+        --bg: rgba(255, 255, 255, 0.3);
 
         position: absolute;
         top: calc(var(--index) * var(--reelSize));
@@ -80,7 +80,7 @@
     }
 
     &__display {
-        --displayShadowColor: rgba(0, 0, 0, 0.125);
+        --displayShadowColor: rgba(0, 0, 0, 0.9);
 
         position: absolute;
         top: 50%;
@@ -96,13 +96,13 @@
         &.is-win {
             --displayShadowColor: rgba(127, 160, 0, 0.5);
 
-            background: rgb(127, 160, 0);
+            background: rgba(127, 160, 0, 0.5);
         }
 
         &.is-fail {
-            --displayShadowColor: rgba(255, 0, 0, 0.25);
+            --displayShadowColor: rgba(255, 0, 0, 0.5);
 
-            background: rgb(255, 0, 0);
+            background: rgba(255, 0, 0, 0.5);
         }
     }
 }

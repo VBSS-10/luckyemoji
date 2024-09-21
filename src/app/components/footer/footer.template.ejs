@@ -1,43 +1,65 @@
 <footer class="footer__base">
     <ul class="footer__content">
-        <li class="footer__option">
-            <a class="footer__link" href="https://gmzcodes.com" target="_blank" title="Visit GMZCodes">
-                <img class="footer__linkIcon" src="gmzcodes/gmzcodes-t-e-32.png" aria-hidden="true" />
-                <span class="footer__linkText" id="author">By GMZcodes</span>
+        <li class="footer__option is-active">
+            <a href="wallet.html" class="footer__button footer__modalButton" title="Wallet">
+                <img class="footer__buttonIcon" src="wallet/wallet_icon.svg" aria-hidden="true" />
+                <!-- <span class="footer__buttonText">Wallet</span> -->
             </a>
         </li>
-
-        <li class="footer__option">
-            <a class="footer__link" href="https://github.com/Danziger/slotjs" target="_blank" title="Visit GitHub Repo">
-                <img class="footer__linkIcon" src="github/github-s-e-16.png" aria-hidden="true" />
-                <span class="footer__linkText" id="github">GitHub</span>
+        
+        <li class="footer__option is-active">
+            <a href="tasks.html" class="footer__button footer__modalButton" title="Tasks">
+                <img class="footer__buttonIcon" src="tasks/tasks_icon.svg" aria-hidden="true" />
+                <!-- <span class="footer__buttonText">Tasks</span> -->
             </a>
         </li>
-
-        <li class="footer__optionSpacer"></li>
-
-        <li class="footer__option">
-            <button class="footer__button footer__modalButton" title="Pay Table" id="togglePayTable" aria-label="Pay Table">
-                <span class="footer__buttonIcon" aria-hidden="true">🏆</span>
+        
+        <li class="footer__option is-active">
+            <button class="footer__button footer__modalButton" title="Pay Table" id="togglePayTable">
+                <img class="footer__buttonIcon" src="winner/winner_icon.svg" aria-hidden="true" />
+                <!-- <span class="footer__buttonText">PayTable</span> -->
             </button>
         </li>
 
-        <li class="footer__option">
+        <li class="footer__option is-active"></li>
+            <a href="info.html" class="footer__button footer__modalButton" title="Info">
+                <img class="footer__buttonIcon" src="info/info_icon.svg" aria-hidden="true" />
+                <!-- <span class="footer__buttonText">Tasks</span> -->
+            </a>
+        </li>
+
+        <li class="footer__option"></li>
             <button class="footer__button footer__modalButton" title="Instructions" id="toggleInstructions" aria-label="Instructions">
                 <span class="footer__buttonIcon" aria-hidden="true">ℹ️</span>
             </button>
         </li>
-
-        <li class="footer__option">
+        
+        <li class="footer__option is-active">
             <button class="footer__button footer__toggleButton" id="toggleSound">
-                <span class="footer__buttonIcon" aria-hidden="true">🔊</span>
+                <img class="footer__buttonIcon" src="sound/sound_icon.svg" aria-hidden="true" />
+                <!-- <span class="footer__buttonText">Sound</span> -->
             </button>
         </li>
-
-        <li class="footer__option">
-            <button class="footer__button footer__toggleButton" id="toggleVibration">
-                <span class="footer__buttonIcon" aria-hidden="true">🍆</span>
-            </button>
-        </li>
+        
+        
+        
     </ul>
+    
 </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Получаем все элементы с классом footer__option
+        const footerOptions = document.querySelectorAll('.footer__option');
+    
+        // Добавляем обработчик события на каждую кнопку или ссылку
+        footerOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Удаляем класс is-active у всех кнопок
+                footerOptions.forEach(opt => opt.classList.remove('is-active'));
+    
+                // Добавляем класс is-active к текущей нажатой кнопке
+                this.classList.add('is-active');
+            });
+        });
+    });
+    </script>

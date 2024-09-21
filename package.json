@@ -1,20 +1,20 @@
 {
-    "name": "slotjs",
+    "name": "Happy Emoji",
     "version": "1.0.0",
-    "description": "🎰 Circular slot machine mobile-first SPA built with JavaScript, CSS variables and Emojis!",
-    "homepage": "https://danziger.github.io/slotjs/",
+    "description": "🎰 Circular slot machine Emojis!",
+    "homepage": "https://t.me/happyemojitap",
     "license": "MIT",
     "author": {
-        "name": "Daniel Gámez Franco",
-        "email": "gmzcodes@outlook.com",
-        "url": "http://gmzcodes.com"
+        "name": "Happy Emoji",
+        "email": "happyemojitap@gmail.com",
+        "url": "https://t.me/happyemojitap"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Danziger/slotjs.git"
+        "url": ""
     },
     "bugs": {
-        "url": "https://github.com/Danziger/slotjs/issues"
+        "url": ""
     },
     "main": "./src/app/main.js",
     "scripts": {

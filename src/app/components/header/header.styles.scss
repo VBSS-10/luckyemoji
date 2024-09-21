@@ -6,10 +6,9 @@
 
     &__base {
         position: relative;
-        background: #fff;
         z-index: 10;
         transform: translateZ(0);
-        border-bottom: 1px solid #f0f0f0; // TODO: Create var
+        top: 20px;
     }
 
     &__content {
@@ -22,70 +21,16 @@
         margin: 0;
     }
 
-    &__logoLink {
-        position: relative;
-        padding: 28px 16px 8px;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        overflow: visible;
-
-        #{$focusVisible} &:focus::before {
-            content: '';
-            position: absolute;
-            inset: 4px;
-            border: 1px dotted black;
-        }
-    }
-
-    &__logoImage {
-        width: 32px;
-        height: 32px;
-        pointer-events: none;
-        image-rendering: pixelated;
-        transition: transform ease-in 0.125s;
-
-        @include above(xs) {
-            margin-right: 16px;
-        }
-
-        #{$root}__logoLink:hover > & {
-            image-rendering: auto;
-            transform: scale(1.1);
-        }
-    }
-
-    &__logoText {
-        position: absolute;
-        font-size: 8px;
-        top: 8px;
-        left: 50%;
-        transform: translate(-50%, 0);
-
-        @include above(xs) {
-            position: static;
-            font-size: inherit;
-            transform: none;
-        }
-    }
-
     &__state {
         flex: 1 0 auto;
         margin: 0;
         list-style: none;
         display: flex;
-        padding: 0;
-        justify-content: flex-end;
+        justify-content: flex;
+        justify-content: space-between;
+        padding: 0 15px; // Отступы от краев
         overflow: hidden;
-        box-shadow: inset -1px 0 0 0 #fff, inset 1px 0 0 0 #f0f0f0, inset 0 0 0 1px #fff;
-        background:
-            repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 4px,
-                #f0f0f0 4px,
-                #f0f0f0 5px
-            );
+        top: 10px;
     }
 
     &__prop {
@@ -97,8 +42,10 @@
         padding: 28px 8px 8px;
         overflow: hidden;
         max-width: 192px;
-        border-left: 1px solid #f0f0f0;
-        background: #fff;
+        border-radius: 12px;
+        border: 0.6px solid #E4E6EA;
+        background: rgb(121, 122, 127, 0.6); /* Цвет #797A7F с 50% прозрачности */
+        box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.5); /* Внутренняя тень */
     }
 
     &__icon {
@@ -125,14 +72,27 @@
             content: attr(aria-label);
             margin-left: 4px;
             font-size: 8px;
+            color: #D9D9D9;
         }
     }
 
     &__value {
         flex: 1 0 auto;
-        background: #f0f0f0;
+        background: #D9D9D9;
         border-radius: 2px;
         padding: 8px;
         font-size: 12px;
+        color: #101B6C;
+    }
+
+    &__just {
+        color: #D9D9D9;
+        font-size: 8px;
+        padding-left: 15px;
+    }
+
+    &__img {
+        width: 15px;
+        height: 15px;
     }
 }

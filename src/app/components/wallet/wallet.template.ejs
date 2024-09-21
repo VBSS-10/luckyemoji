@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charSet="UTF-8" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" as="style" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" media="print" onload="this.media='all'" />
+</head>
+
+<body class="app__base">
+
+    <main class="app__main" id="main">
+        <div class="wallet__container">
+            <img class="back__buttonIcon" id="backButton" src="back/back_icon.svg" aria-hidden="true" />
+            <h1 class="wallet__text"><%= htmlWebpackPlugin.options.title %></h1>
+        </div>
+
+        <!-- Исправленный контейнер users__content -->
+        <div class="users__content">
+            <div class="users__prop">
+                <span class="users__icon">
+                    <img class="users__img" src="avatest/avatest.webp" aria-hidden="true" />
+                </span>
+            </div>
+            <div class="users__namesection">
+                <span class="users__name">@usersname</span>
+            </div>
+        </div>
+        
+        <div class="title__content">
+                <span class="title__name">Your game</span>
+        </div>
+        
+        <div class="box__content">
+            <div class="box__state">
+                <div class="box__prop" title="Coins">
+                    <span class="box__icon" role="img" aria-label="Coins">
+                        <img class="box__img" src="coin/coin_icon.svg" aria-hidden="true" />
+                    </span>
+                    <span class="box__value" id="coins">99999</span>
+                </div>
+                <div class="box__prop" title="Jackpot">
+                    <span class="box__icon" role="img" aria-label="Jackpot">
+                        <img class="box__img" src="jackpot/jp_icon.svg" aria-hidden="true" />
+                    </span>
+                    <span class="box__value" id="jackpot">231906</span>
+                </div>
+                <div class="box__prop" title="Spins">
+                    <span class="box__icon" role="img" aria-label="Spins">
+                        <img class="box__img" src="spins/spin_icon.svg" aria-hidden="true" />
+                    </span>
+                    <span class="box__value" id="spins">15708</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table__content">
+            <span class="table__name">Bankroll</span>
+        </div>
+
+        <div class="table">
+            <div class="table__cell">
+                <div class="table__prop" title="AirDrop">
+                    <span class="table__icon" role="img" aria-label="AirDrop"></span>
+                    <span class="table__value" id="jackpot">103020</span>
+                </div>
+            </div>
+            <div class="table__cell">
+                <div class="table__prop" title="Prize Fund">
+                    <span class="table__icon" role="img" aria-label="Prize Fund"></span>
+                    <span class="table__value" id="jackpot">70000,53</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="frends__content">
+            <span class="frends__name">Friends</span>
+        </div>
+
+        <div class="frends">
+            <div class="frends__cell">
+                <div class="frends__prop" title="Frens">
+                    <span class="frends__icon" role="img" aria-label="Frens"></span>
+                    <span class="frends__value" id="Frens">1000</span>
+                </div>
+            </div>
+            <div class="frends__cell">
+                <div class="frends__proplink" title="Invite Frens">
+                    <span class="frends__icon" role="img" aria-label="Invite Frens"></span>
+                    <span class="frends__valuelink" id="jackpot">https://t.me/luсkyemoji/?=7746457444</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <%- include ../footer/footer.template.ejs %>
+
+</body>
+</html>

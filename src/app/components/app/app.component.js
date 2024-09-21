@@ -25,14 +25,45 @@ const handleOptionChange = (key, value) => {
     if (service) service[value ? 'enable' : 'disable']();
 
     localStorage.setItem(key, value);
+
+    // Сохранение состояния в базу данных через API
+    saveUserData({ [key]: value });
 };
+
+async function saveUserData(data) {
+    try {
+        const user = window.Telegram?.WebApp?.initDataUnsafe?.user;
+        if (!user) {
+            console.error('Telegram WebApp data is not available');
+            return;
+        }
+
+        const response = await fetch('https://c8b5-78-153-139-203.ngrok-free.app/api/save_user_data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userId: user.id,
+                username: user.username,
+                firstName: user.first_name,
+                lastName: user.last_name,
+                ...data,
+            }),
+        });
+
+        if (!response.ok) {
+            console.error('Failed to save user data');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 
 export class App {
 
-    // CSS classes:
     static C_FOCUS_ACTIVE = 'focus-active';
 
-    // CSS selectors:
     static S_COINS = '#coins';
     static S_JACKPOT = '#jackpot';
     static S_SPINS = '#spins';
@@ -46,171 +77,62 @@ export class App {
     static S_PAY_TABLE_MODAL_BUTTON = '#togglePayTable';
     static S_PLAY = '#playButton';
 
-    // Misc.:
     static ONE_DAY = 1000 * 60 * 60 * 24;
 
-    // Elements:
-    coinsElement = document.querySelector(App.S_COINS);
-    jackpotElement = document.querySelector(App.S_JACKPOT);
-    spinsElement = document.querySelector(App.S_SPINS);
-    mainElement = document.querySelector(App.S_MAIN);
-
-    // Components:
-    slotMachine;
-    payTable;
-    instructionsModal;
-
-    // State:
-    // TODO: Create constants in a config file for all these numbers...
-    coins = parseInt(localStorage.coins, 10) || 100;
-    jackpot = parseInt(localStorage.jackpot, 10) || 1000;
-    spins = parseInt(localStorage.spins, 10) || 0;
-    lastSpin = localStorage.lastSpin || 0;
-    isSoundDisabled = localStorage.sound === 'false';
-    isVibrationDisabled = localStorage.vibration === 'false';
-    isFirstTime = localStorage.firstTime !== 'false';
-
     constructor() {
+        this.coinsElement = null;
+        this.jackpotElement = null;
+        this.spinsElement = null;
+        this.mainElement = null;
+
+        this.slotMachine = null;
+        this.payTable = null;
+        this.instructionsModal = null;
+
+        this.coins = parseInt(localStorage.coins, 10) || 100;
+        this.jackpot = parseInt(localStorage.jackpot, 10) || 1000;
+        this.spins = parseInt(localStorage.spins, 10) || 0;
+        this.lastSpin = localStorage.lastSpin || 0;
+        this.isSoundDisabled = localStorage.sound === 'false';
+        this.isVibrationDisabled = localStorage.vibration === 'false';
+        this.isFirstTime = localStorage.firstTime !== 'false';
+
         const now = Date.now();
 
-        // Update jackpot randomly:
+        if (window.Telegram?.WebApp) {
+            window.Telegram.WebApp.ready();
+        }
+
         if (now - this.lastSpin >= App.ONE_DAY) {
             localStorage.jackpot = this.jackpot = Math.max(500, this.jackpot - 500 + (Math.random() * 1000)) | 0;
             localStorage.lastSpin = now;
         }
 
-        // Bind event listeners:
         this.handleModalToggle = this.handleModalToggle.bind(this);
         this.handleUseCoin = this.handleUseCoin.bind(this);
         this.handleGetPrice = this.handleGetPrice.bind(this);
 
-        let focusActive = false;
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab' && !focusActive) {
-                focusActive = true;
-                document.body.classList.add(App.C_FOCUS_ACTIVE);
-            } else if (e.key === 'Escape' && focusActive) {
-                focusActive = false;
-                document.body.classList.remove(App.C_FOCUS_ACTIVE);
-            }
-        });
-
-        document.addEventListener('mousedown', () => {
-            focusActive = false;
-            document.body.classList.remove(App.C_FOCUS_ACTIVE);
-        });
-
-        // Init/render conditional parts of the UI such as vibration and first-time only features:
         this.initUI();
-
-        /*
-        // TODO: Move this to CheatMode component.
-
-        const originalSpeed = slotMachine.speed;
-
-        let confirmation;
-        let yes;
-        let no;
-
-        const wait = () => {
-            // eslint-disable-next-line no-console
-            console.log('Ok... 👌');
-
-            setTimeout(() => {
-                // eslint-disable-next-line no-console
-                console.log(confirmation);
-            }, 5000 + Math.random() * 5000);
-        };
-
-        const cheat = () => {
-            slotMachine.speed = originalSpeed / 100;
-            confirmation = 'Ok, really... Last chance. Do yo want to go back to normal mode? 😠';
-            yes = normal; // eslint-disable-line no-use-before-define
-            no = wait;
-
-            // eslint-disable-next-line no-console
-            console.log('Ok, but remember time will go on as normal for you... ⏳');
-            // eslint-disable-next-line max-len, no-console
-            console.log('Do you want to go back before it\'s too late?
-            You don\'t want to happen to you what happened to Captain America 🛡️, do you?');
-        };
-
-        const normal = () => {
-            slotMachine.speed = originalSpeed;
-            confirmation = 'I\'m sure you are gonna like it...? Wanna play in God mode? 😏 💰';
-            yes = cheat;
-            no = wait;
-
-            // eslint-disable-next-line no-console
-            console.log('Playing in normal mode.');
-            // eslint-disable-next-line no-console
-            console.log('Wanna switch to God mode? 😏');
-        };
-
-        normal();
-
-        const yesGetter = () => { yes(); };
-        const noGetter = () => { no(); };
-
-        Object.defineProperties(window, {
-            yes: { get: yesGetter },
-            no: { get: noGetter },
-            Yes: { get: yesGetter },
-            No: { get: noGetter },
-        });
-
-        */
-
-
-    }
-
-    handleUseCoin() {
-        localStorage.coins = this.coins = Math.max(this.coins - 1, 0) || 100;
-        localStorage.jackpot = ++this.jackpot;
-        localStorage.spins = ++this.spins;
-        localStorage.lastSpin = this.lastSpin = Date.now();
-
-        this.refreshGameInfo();
-    }
-
-    handleGetPrice(jackpotPercentage) {
-        const price = Math.min(Math.max(Math.ceil(jackpotPercentage * this.jackpot), 10), this.jackpot);
-
-        localStorage.jackpot = this.jackpot = Math.max(this.jackpot - price, 0) || 1000;
-        localStorage.coins = this.coins += price;
-
-        this.refreshGameInfo();
-    }
-
-    refreshGameInfo() {
-        const maxValue = Math.max(this.coins, this.jackpot, this.spins);
-        const padding = Math.max(Math.ceil(maxValue.toString().length / 2) * 2, 5);
-
-        this.coinsElement.innerText = `${ this.coins }`.padStart(padding, '0');
-        this.jackpotElement.innerText = `${ this.jackpot }`.padStart(padding, '0');
-        this.spinsElement.innerText = `${ this.spins }`.padStart(padding, '0');
     }
 
     initUI() {
-        const { isFirstTime } = this;
+        this.coinsElement = document.querySelector(App.S_COINS);
+        this.jackpotElement = document.querySelector(App.S_JACKPOT);
+        this.spinsElement = document.querySelector(App.S_SPINS);
+        this.mainElement = document.querySelector(App.S_MAIN);
 
-        // Init/render the game info at the top:
         this.refreshGameInfo();
 
         if (IS_DESKTOP) {
-            // TODO: Move to toggle button?
-            document.querySelector(App.S_TOGGLE_VIBRATION).parentElement.setAttribute('hidden', true);
-            // TODO: Move to instructions modal?
-            document.querySelector(App.S_VIBRATION_INSTRUCTIONS).setAttribute('hidden', true);
+            document.querySelector(App.S_TOGGLE_VIBRATION)?.parentElement.setAttribute('hidden', true);
+            document.querySelector(App.S_VIBRATION_INSTRUCTIONS)?.setAttribute('hidden', true);
         }
 
         this.initToggleButtons();
 
         const playButtonElement = document.querySelector(App.S_PLAY);
 
-        if (isFirstTime) {
-
+        if (this.isFirstTime && playButtonElement) {
             playButtonElement.onclick = () => {
                 this.isFirstTime = localStorage.firstTime = false;
 
@@ -222,38 +144,30 @@ export class App {
 
                 this.slotMachine.start();
             };
-        } else {
+        } else if (playButtonElement) {
             playButtonElement.setAttribute('hidden', true);
         }
 
-        // TODO: Pass params as options, except for root selector or some of the basic ones...:
-
-        // Init/render instructions modal, which might be open straight away:
         this.instructionsModal = new Modal(
             App.S_INSTRUCTIONS_MODAL,
             App.S_INSTRUCTIONS_MODAL_BUTTON,
             'instructions',
-            isFirstTime,
-            isFirstTime,
+            this.isFirstTime,
+            this.isFirstTime,
             this.handleModalToggle,
         );
 
-        // Init/render slot machine symbols:
         this.slotMachine = new SlotMachine(
             this.mainElement,
             this.handleUseCoin,
             this.handleGetPrice,
             5,
             SYMBOLS_RANDOM,
-            isFirstTime,
+            this.isFirstTime,
         );
 
-        // Init/render pay table and pay table modal, which is always closed in the beginning:
         this.payTable = new PayTable(SYMBOLS_RANDOM);
 
-        // TODO: Should be disabled in the begining (or hide button):
-        // TODO: Hide modals with hidden rather than is-open...
-        // eslint-disable-next-line no-new
         new Modal(
             App.S_PAY_TABLE_MODAL,
             App.S_PAY_TABLE_MODAL_BUTTON,
@@ -264,14 +178,55 @@ export class App {
         );
     }
 
+    refreshGameInfo() {
+        const maxValue = Math.max(this.coins, this.jackpot, this.spins);
+        const padding = Math.max(Math.ceil(maxValue.toString().length / 2) * 2, 5);
+
+        if (this.coinsElement) {
+            this.coinsElement.innerText = `${ this.coins }`.padStart(padding, '0');
+        }
+        if (this.jackpotElement) {
+            this.jackpotElement.innerText = `${ this.jackpot }`.padStart(padding, '0');
+        }
+        if (this.spinsElement) {
+            this.spinsElement.innerText = `${ this.spins }`.padStart(padding, '0');
+        }
+    }
+
     initToggleButtons() {
-        // eslint-disable-next-line no-new
         new ToggleButton(App.S_TOGGLE_SOUND, 'sound', !this.isSoundDisabled, handleOptionChange);
 
         if (!IS_DESKTOP) {
-            // eslint-disable-next-line no-new
             new ToggleButton(App.S_TOGGLE_VIBRATION, 'vibration', !this.isVibrationDisabled, handleOptionChange);
         }
+    }
+
+    handleUseCoin() {
+        localStorage.coins = this.coins = Math.max(this.coins - 1, 0) || 100;
+        localStorage.jackpot = ++this.jackpot;
+        localStorage.spins = ++this.spins;
+        localStorage.lastSpin = this.lastSpin = Date.now();
+
+        this.refreshGameInfo();
+        saveUserData({
+            coins: this.coins,
+            jackpot: this.jackpot,
+            spins: this.spins,
+            lastSpin: this.lastSpin,
+        });
+    }
+
+    handleGetPrice(jackpotPercentage) {
+        const price = Math.min(Math.max(Math.ceil(jackpotPercentage * this.jackpot), 10), this.jackpot);
+
+        localStorage.jackpot = this.jackpot = Math.max(this.jackpot - price, 0) || 1000;
+        localStorage.coins = this.coins += price;
+
+        this.refreshGameInfo();
+        saveUserData({
+            coins: this.coins,
+            jackpot: this.jackpot,
+        });
     }
 
     handleModalToggle(isOpen, key) {

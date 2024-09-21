@@ -6,37 +6,27 @@
 
     &__base {
         position: relative;
-        background: #fff;
+        background: rgba(39, 43, 46, 0.51); // Цвет с 51% прозрачностью
         z-index: 10;
         transform: translateZ(0);
-        border-top: 1px solid #f0f0f0; // TODO: Create var
+        border-top: 1px solid #3B3A3A; // TODO: Create var
+        max-height: 56px;
     }
 
     &__content {
         max-width: 800px; // TODO: Create var
         margin: 0 auto;
         display: flex;
+        justify-content: space-between; // Расстояние между кнопками
         list-style: none;
-        padding: 0;
+        padding: 0 15px; // Отступы от краев
     }
 
     &__option {
         flex: 1 0 auto;
-    }
-
-    &__optionSpacer {
-        position: relative;
-        width: 100%;
-        border-right: 1px solid #f0f0f0;
-        box-shadow: inset -1px 0 0 0 #fff, inset 1px 0 0 0 #f0f0f0, inset 0 0 0 1px #fff;
-        background:
-            repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 4px,
-                #f0f0f0 4px,
-                #f0f0f0 5px
-            );
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     &__link,
@@ -44,11 +34,17 @@
         position: relative;
         height: 100%;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         min-width: 52px;
         line-height: 32px;
         box-sizing: border-box;
+        font-family: 'Press Start 2P', monospace;
+        font-size: 9px;
+        text-transform: uppercase;
+        color: black;
+        text-decoration: none;
 
         #{$focusVisible} &:focus::after {
             content: '';
@@ -56,37 +52,38 @@
             inset: 4px;
             border: 1px dotted black;
         }
-    }
-
-    &__link {
-        padding: 8px 16px 28px;
-        font-size: 9px;
-        text-transform: uppercase;
-        text-decoration: none;
-        color: black;
-
-        #{$root}__option + #{$root}__option > & {
-            border-left: 1px solid #f0f0f0;
-        }
 
         &Icon {
-            width: 16px;
-            height: 16px;
+            width: 32px;
+            height: 32px;
             image-rendering: pixelated;
-            transition: transform ease-in 0.125s;
+            transition: transform ease-in 0.125s, fill 0.125s;
+            filter: invert(31%) sepia(8%) saturate(186%) hue-rotate(180deg) brightness(95%) contrast(89%);
+            margin-bottom: 2px; // Отступ текста от иконки
 
             @include above(sm) {
-                margin-right: 16px;
+                margin-right: 4px;
             }
         }
 
+        // Стили для иконки при наведении
         &:hover > &Icon {
             image-rendering: auto;
             transform: scale(1.4);
+            filter: invert(91%) sepia(5%) saturate(8%) hue-rotate(177deg) brightness(105%) contrast(91%);
+        }
+
+        // Стили для иконки, когда кнопка активна
+        &:active > &Icon,
+        &.is-active > &Icon {
+            filter: invert(91%) sepia(5%) saturate(8%) hue-rotate(177deg) brightness(105%) contrast(91%);
+            filter: brightness(0) invert(1); // Для обеспечения белого цвета у любого SVG
         }
 
         &Text {
-            display: none;
+            display: block;
+            text-align: center;
+            margin-top: 0; // Отступ текста от нижней части
 
             @include above(sm) {
                 display: block;
@@ -96,7 +93,7 @@
 
     &__button {
         padding: 8px 8px 28px;
-        font-size: 16px;
+        font-size: 9px;
         border: 0;
         background: transparent;
         outline: none;
@@ -104,14 +101,12 @@
 
         &Icon {
             transition: transform ease-in 0.125s;
+            width: 32px;
+            height: 32px;
         }
 
         &:hover > &Icon {
             transform: scale(1.4);
-        }
-
-        #{$root}__option + #{$root}__option > & {
-            border-left: 1px solid #f0f0f0;
         }
     }
 
@@ -147,4 +142,8 @@
     &__modalButton.is-open {
         box-shadow: 0 -1px 0 0 #000;
     }
+}
+
+#toggleInstructions {
+    display: none;
 }
